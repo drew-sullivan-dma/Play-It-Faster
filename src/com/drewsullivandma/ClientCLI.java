@@ -25,8 +25,6 @@ public class ClientCLI {
 			setTempoBasedOnGoalTempo();
 			do {
 				printPracticeTempoForUserEvaluation();
-//				while(!userOpinionOfTempoIsSet()) {
-//				}
 				setUserOpinionOfTempo();
 				adjustTempo(userOpinionOfTempo);
 			} while(!tempoIsPerfect()); 
@@ -37,14 +35,6 @@ public class ClientCLI {
 	private boolean tempoIsSet() {
 		return tempo > 0;
 	}
-	
-//	private boolean userOpinionOfTempoIsSet() {
-//		if(userOpinionOfTempo == null) {
-//			return false;
-//		} else {
-//			return true;
-//		}
-//	}
 	
 	private void setUserKnowledgeOfTempo() {
 		System.out.println("Do you know what tempo to start practicing at today? Yes or No?");

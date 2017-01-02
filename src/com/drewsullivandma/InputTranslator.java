@@ -11,9 +11,9 @@ public class InputTranslator {
 														      144, 152, 160, 168, 176, //30-34
 														      184, 192, 200, 208, 216, //35-39
 														      224, 232, 240}; //40-42
-	private static final int TEMPOS_LOWER_BOUND = 40;
-	private static final int TEMPOS_UPPER_BOUND = 240;
-	private static final int LOWEST_ADJUSTABLE_TEMPO = 80;
+	public static final int TEMPOS_LOWER_BOUND = 40;
+	public static final int TEMPOS_UPPER_BOUND = 240;
+	public static final int LOWEST_ADJUSTABLE_TEMPO = 80;
 
 	public static int getTemposLowerBound() {
 		return TEMPOS_LOWER_BOUND;
