@@ -1,8 +1,10 @@
-package com.techelevator;
+package com.drewsullivandma;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+
+import com.drewsullivandma.InputTranslator;
 
 public class InputTranslatorTest {
 //	TODO: 

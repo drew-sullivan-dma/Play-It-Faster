@@ -1,4 +1,4 @@
-package com.techelevator;
+package com.drewsullivandma;
 
 import java.util.Scanner;
 
