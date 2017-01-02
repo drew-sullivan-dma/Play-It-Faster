@@ -11,6 +11,16 @@ public class InputTranslator {
 														      144, 152, 160, 168, 176, //30-34
 														      184, 192, 200, 208, 216, //35-39
 														      224, 232, 240}; //40-42
+	private final static int TEMPO_LOWER_BOUND = 40;
+	private final static int TEMPO_UPPER_BOUND = 240;
+
+	public static int getTEMPO_LOWER_BOUND() {
+		return TEMPO_LOWER_BOUND;
+	}
+
+	public static int getTEMPO_UPPER_BOUND() {
+		return TEMPO_UPPER_BOUND;
+	}
 
 	public static int translateToMetronomeTempo(int tempoToBeTranslated) {
 		if(tempoToBeTranslated == 40) {
@@ -52,8 +62,6 @@ public class InputTranslator {
 				   chars[i] == 'n') {
 					   shortenedUserInput = chars[i]; 
 					   break;
-				} else {
-					shortenedUserInput = '#';
 				}
 			}
 		} else {

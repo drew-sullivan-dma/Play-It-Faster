@@ -8,8 +8,6 @@ public class ClientCLI {
 	private boolean userThinksGivenPracticeTempoIsPerfect = false; 
 	private int tempo;
 	private char userOpinionOfPracticeTempo;
-	private final int TEMPO_LOWER_BOUND = 40;
-	private final int TEMPO_UPPER_BOUND = 240;
 	
 	public static void main(String[] args) {
 		ClientCLI cli = new ClientCLI();
@@ -50,7 +48,7 @@ public class ClientCLI {
 				userKnowsWhatTempoToBeginPracticingAt = true;
 			}
 		} catch (IllegalArgumentException ex) {
-			System.out.println("Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+			printOutOfRangeErrorMessage();
 		}
 	}
 	
@@ -64,7 +62,7 @@ public class ClientCLI {
 				tempo = userInputInt;
 			}
 		} catch(Exception ex) {
-			System.out.println("Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+			printOutOfRangeErrorMessage();
 		}
 	}
 	
@@ -79,7 +77,7 @@ public class ClientCLI {
 			System.out.printf("%-15s%5s", "Then bump up the metronome and aim for this tempo:", reachTempo + "\n");
 			System.out.printf("%-15s%5s", "Once you can do it a few times at ", reachTempo + ", you're all done with that pattern for the day!");
 		} catch (IllegalArgumentException ex) {
-			System.out.println("Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+			printOutOfRangeErrorMessage();
 		}
 	}
 	
@@ -94,7 +92,7 @@ public class ClientCLI {
 			}
 			userOpinionOfPracticeTempo = shortenedUserInput;
 		} catch(IllegalArgumentException ex) {
-			System.out.println("Tempo too slow. Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+			printOutOfRangeErrorMessage();
 		}
 	}
 	
@@ -110,7 +108,7 @@ public class ClientCLI {
 				tempo = PracticeTempoCalculator.slowDown(tempo);
 			}
 		} catch(IllegalArgumentException ex) {
-			System.out.println("Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+			printOutOfRangeErrorMessage();
 		}
 	}
 	
@@ -119,8 +117,12 @@ public class ClientCLI {
 			int untranslatedDividedTempo = PracticeTempoCalculator.divideByTwo(tempo);
 			tempo = InputTranslator.translateToMetronomeTempo(untranslatedDividedTempo);
 		} catch(IllegalArgumentException ex) {
-			System.out.println("Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+			printOutOfRangeErrorMessage();
 		}
+	}
+	
+	private void printOutOfRangeErrorMessage() {
+		System.out.println("Please enter a tempo between " + InputTranslator.getTEMPO_LOWER_BOUND() + " and " +  InputTranslator.getTEMPO_UPPER_BOUND() + ".");
 	}
 	
 
