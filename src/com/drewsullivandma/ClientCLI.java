@@ -66,8 +66,6 @@ public class ClientCLI {
 		} catch(Exception ex) {
 			System.out.println("Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
 		}
-		
-		
 	}
 	
 	private void printPracticeTempos() {
@@ -86,18 +84,18 @@ public class ClientCLI {
 	}
 	
 	private void setUserOpinionOfPracticeTempo() {
-			System.out.println("Is this tempo too slow, too fast, or perfect?");
-			Scanner scan = new Scanner(System.in);
-			String userInput = scan.nextLine();
-			try {
-				char shortenedUserInput = InputTranslator.parseUserOpinionOfPracticeTempo(userInput);
-				if(shortenedUserInput == 'p') {
-					userThinksGivenPracticeTempoIsPerfect = true;
-				}
-				userOpinionOfPracticeTempo = shortenedUserInput;
-			} catch(IllegalArgumentException ex) {
-				System.out.println("Tempo too slow. Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+		System.out.println("Is this tempo too slow, too fast, or perfect?");
+		Scanner scan = new Scanner(System.in);
+		String userInput = scan.nextLine();
+		try {
+			char shortenedUserInput = InputTranslator.parseUserOpinionOfPracticeTempo(userInput);
+			if(shortenedUserInput == 'p') {
+				userThinksGivenPracticeTempoIsPerfect = true;
 			}
+			userOpinionOfPracticeTempo = shortenedUserInput;
+		} catch(IllegalArgumentException ex) {
+			System.out.println("Tempo too slow. Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+		}
 	}
 	
 	private void printPracticeTempoForUserEvaluation() {
