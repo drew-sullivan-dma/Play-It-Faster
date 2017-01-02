@@ -16,7 +16,7 @@ public class ClientCLI {
 	}
 	
 	private void runProgram() {
-		setKnowledgeOfPracticeTempoBasedOnUserInput();
+		setUserKnowledgeOfTempo();
 		while(tempo == 0) {
 			setGoalTempoBasedOnUserInput();
 		}
@@ -38,31 +38,33 @@ public class ClientCLI {
 		printPracticeTempos();
 	}
 	
-	private void setKnowledgeOfPracticeTempoBasedOnUserInput() {
+	private void setUserKnowledgeOfTempo() {
 		System.out.println("Do you know what tempo to start practicing at today? Yes or No?");
-		Scanner scan = new Scanner(System.in);
-		String userInput = scan.nextLine();
-		try {
+		try (Scanner scan = new Scanner(System.in)) {
+			String userInput = scan.nextLine();
 			char shortenedUserInput = InputTranslator.parseUserOpinionOfPracticeTempo(userInput);
 			if(shortenedUserInput == 'y') {
 				userKnowsWhatTempoToBeginPracticingAt = true;
 			}
 		} catch (IllegalArgumentException ex) {
 			printOutOfRangeErrorMessage();
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
 	
 	private void setGoalTempoBasedOnUserInput() {
 		System.out.println("What is your goal tempo?");
-		Scanner scan = new Scanner(System.in);
-		String userInput = scan.nextLine();
-		try {
+		try (Scanner scan = new Scanner(System.in)) {
+			String userInput = scan.nextLine();
 			int userInputInt = Integer.parseInt(userInput);
 			if(InputTranslator.isValidTempo(userInputInt)) {
 				tempo = userInputInt;
 			}
-		} catch(Exception ex) {
+		} catch (IllegalArgumentException ex) {
 			printOutOfRangeErrorMessage();
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
 	
@@ -83,16 +85,17 @@ public class ClientCLI {
 	
 	private void setUserOpinionOfPracticeTempo() {
 		System.out.println("Is this tempo too slow, too fast, or perfect?");
-		Scanner scan = new Scanner(System.in);
-		String userInput = scan.nextLine();
-		try {
+		try (Scanner scan = new Scanner(System.in)) {
+			String userInput = scan.nextLine();
 			char shortenedUserInput = InputTranslator.parseUserOpinionOfPracticeTempo(userInput);
 			if(shortenedUserInput == 'p') {
 				userThinksGivenPracticeTempoIsPerfect = true;
 			}
 			userOpinionOfPracticeTempo = shortenedUserInput;
-		} catch(IllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			printOutOfRangeErrorMessage();
+		} catch(Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
 	
