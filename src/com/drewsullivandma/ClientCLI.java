@@ -122,7 +122,9 @@ public class ClientCLI {
 	}
 	
 	private void printOutOfRangeErrorMessage() {
-		System.out.println("Please enter a tempo between " + InputTranslator.getTEMPO_LOWER_BOUND() + " and " +  InputTranslator.getTEMPO_UPPER_BOUND() + ".");
+		int TEMPO_LOWER_BOUND = InputTranslator.getTEMPO_LOWER_BOUND();
+		int TEMPO_UPPER_BOUND = InputTranslator.getTEMPO_UPPER_BOUND();
+		System.out.println("Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
 	}
 	
 
