@@ -7,7 +7,7 @@ import org.junit.Test;
 import com.drewsullivandma.InputTranslator;
 
 public class InputTranslatorTest {
-//	TODO: 
+
 	@Test
 	public void string_input_translator_chops_off_expected_extra_material_from_user_input() {
 		assertEquals('f', InputTranslator.parseUserOpinionOfPracticeTempo("too fast"));
