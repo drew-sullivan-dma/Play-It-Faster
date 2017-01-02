@@ -25,8 +25,10 @@ public class ClientCLI {
 			setTempoBasedOnGoalTempo();
 			do {
 				printPracticeTempoForUserEvaluation();
-				setUserOpinionOfPracticeTempo();
-				adjustPracticeTempo(userOpinionOfTempo);
+//				while(!userOpinionOfTempoIsSet()) {
+//				}
+				setUserOpinionOfTempo();
+				adjustTempo(userOpinionOfTempo);
 			} while(!tempoIsPerfect()); 
 		}
 		printPracticeTempos();
@@ -35,6 +37,14 @@ public class ClientCLI {
 	private boolean tempoIsSet() {
 		return tempo > 0;
 	}
+	
+//	private boolean userOpinionOfTempoIsSet() {
+//		if(userOpinionOfTempo == null) {
+//			return false;
+//		} else {
+//			return true;
+//		}
+//	}
 	
 	private void setUserKnowledgeOfTempo() {
 		System.out.println("Do you know what tempo to start practicing at today? Yes or No?");
@@ -87,7 +97,7 @@ public class ClientCLI {
 		}
 	}
 	
-	private void setUserOpinionOfPracticeTempo() {
+	private void setUserOpinionOfTempo() {
 		System.out.println("Is this tempo too slow, too fast, or perfect?");
 		@SuppressWarnings("resource")
 		Scanner scan = new Scanner(System.in);
@@ -114,7 +124,7 @@ public class ClientCLI {
 		System.out.println("Your practice tempo is: " + tempo + ". Try it out for a few reps to see what you think.");
 	}
 	
-	private void adjustPracticeTempo(char userOpinionOfPracticeTempo) {
+	private void adjustTempo(char userOpinionOfPracticeTempo) {
 		int untranslatedTempo = 0;
 		try {
 			if(userOpinionOfPracticeTempo == 's') {
@@ -123,7 +133,7 @@ public class ClientCLI {
 				untranslatedTempo = PracticeTempoCalculator.slowDown(tempo);
 			} else if(userOpinionOfPracticeTempo == 'p') {
 				untranslatedTempo = tempo;
-			}
+			} 
 			tempo = InputTranslator.translateToMetronomeTempo(untranslatedTempo);
 		} catch(IllegalArgumentException ex) {
 			printOutOfRangeErrorMessage();
