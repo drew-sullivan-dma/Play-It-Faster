@@ -17,6 +17,12 @@ public class PracticeTempoCalculatorTest {
 	}
 	
 	@Test
+	public void rhythms_tempo_returns_TEMPO_LOWER_BOUND_if_calculation_lower_than_TEMPO_LOWER_BOUND() {
+		assertEquals(40, PracticeTempoCalculator.getRhythmsTempo(40));
+		assertEquals(40, PracticeTempoCalculator.getRhythmsTempo(53));
+	}
+	
+	@Test
 	public void reach_tempo_returns_expected_translated_user_input() {
 		assertEquals(70, PracticeTempoCalculator.getReachTempo(60));
 		assertEquals(130, PracticeTempoCalculator.getReachTempo(120));
@@ -37,6 +43,12 @@ public class PracticeTempoCalculatorTest {
 	}
 	
 	@Test
+	public void divide_by_two_does_not_divide_by_two_if_input_is_below_TEMPO_ADJUSTMENT_LOWER_BOUND() {
+		assertEquals(50, PracticeTempoCalculator.divideByTwo(50));
+		assertEquals(79, PracticeTempoCalculator.divideByTwo(79));
+	}
+	
+	@Test
 	public void speed_up_speeds_up_by_the_expected_amount() {
 		assertEquals(176, PracticeTempoCalculator.speedUp(160));
 		assertEquals(144, PracticeTempoCalculator.speedUp(132));
@@ -47,7 +59,7 @@ public class PracticeTempoCalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void speed_up_throws_error_when_out_of_40_to_240_range() {
+	public void speed_up_throws_error_when_out_of_range() {
 		PracticeTempoCalculator.speedUp(30);
 		PracticeTempoCalculator.speedUp(241);
 		PracticeTempoCalculator.speedUp(225);
@@ -63,7 +75,7 @@ public class PracticeTempoCalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void slow_down_throws_error_when_out_of_40_to_240_range() {
+	public void slow_down_throws_error_when_out_of_range() {
 		PracticeTempoCalculator.slowDown(43);
 		PracticeTempoCalculator.slowDown(2000);
 		PracticeTempoCalculator.slowDown(3);

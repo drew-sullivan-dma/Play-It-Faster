@@ -11,25 +11,30 @@ public class InputTranslator {
 														      144, 152, 160, 168, 176, //30-34
 														      184, 192, 200, 208, 216, //35-39
 														      224, 232, 240}; //40-42
-	private static final int TEMPO_LOWER_BOUND = 40;
-	private static final int TEMPO_UPPER_BOUND = 240;
+	private static final int TEMPOS_LOWER_BOUND = 40;
+	private static final int TEMPOS_UPPER_BOUND = 240;
+	private static final int LOWEST_ADJUSTABLE_TEMPO = 80;
 
-	public static int getTEMPO_LOWER_BOUND() {
-		return TEMPO_LOWER_BOUND;
+	public static int getTemposLowerBound() {
+		return TEMPOS_LOWER_BOUND;
 	}
 
-	public static int getTEMPO_UPPER_BOUND() {
-		return TEMPO_UPPER_BOUND;
+	public static int getTemposUpperBound() {
+		return TEMPOS_UPPER_BOUND;
+	}
+
+	public static int getLowestAdjustableTempo() {
+		return LOWEST_ADJUSTABLE_TEMPO;
 	}
 
 	public static int translateToMetronomeTempo(int tempoToBeTranslated) {
-		if(tempoToBeTranslated == 40) {
-			return 40;
+		if(tempoToBeTranslated == TEMPOS_LOWER_BOUND) {
+			return TEMPOS_LOWER_BOUND;
 		}
-		if(tempoToBeTranslated < 40) {
+		if(tempoToBeTranslated < TEMPOS_LOWER_BOUND) {
 			throw new IllegalArgumentException();
 		}
-		if(tempoToBeTranslated > 240) {
+		if(tempoToBeTranslated > TEMPOS_UPPER_BOUND) {
 			throw new IllegalArgumentException();
 		}
 		for(int i = METRONOME_TEMPOS.length - 1; tempoToBeTranslated != METRONOME_TEMPOS[i]; i--) {
@@ -43,7 +48,7 @@ public class InputTranslator {
 	}
 	
 	public static boolean isValidTempo(int userInput) {
-		if(userInput < 40 || userInput > 240) {
+		if(userInput < TEMPOS_LOWER_BOUND || userInput > TEMPOS_UPPER_BOUND) {
 			throw new IllegalArgumentException();
 		} else {
 			return true;

@@ -5,7 +5,12 @@ public class PracticeTempoCalculator {
 	
 	public static int getRhythmsTempo(int inputTempo) {
 		int rhythmsTempo = inputTempo * 3/4;
-		return rhythmsTempo;
+		int TEMPOS_LOWER_BOUND = InputTranslator.getTemposLowerBound();
+		if(rhythmsTempo < TEMPOS_LOWER_BOUND) {
+			return TEMPOS_LOWER_BOUND;	
+		} else {
+			return rhythmsTempo;
+		}
 	}
 
 	public static int getReachTempo(int inputTempo) {
@@ -14,7 +19,12 @@ public class PracticeTempoCalculator {
 	}
 	
 	public static int divideByTwo(int inputTempo) {
-		return inputTempo / 2;
+		int LOWEST_ADJUSTABLE_TEMPO = InputTranslator.getLowestAdjustableTempo();
+		if(inputTempo >= LOWEST_ADJUSTABLE_TEMPO) {
+			return inputTempo / 2;
+		} else {
+			return inputTempo;
+		}
 	}
 	
 	public static int speedUp(int tempo) {
@@ -29,7 +39,7 @@ public class PracticeTempoCalculator {
 		} else {
 			throw new IllegalArgumentException();
 		}
-		return InputTranslator.translateToMetronomeTempo(tempo);
+		return tempo;
 	}
 	
 	public static int slowDown(int tempo) {
@@ -47,7 +57,7 @@ public class PracticeTempoCalculator {
 		else {
 			throw new IllegalArgumentException();
 		}
-		return InputTranslator.translateToMetronomeTempo(tempo);
+		return tempo;
 	}	
 		
 

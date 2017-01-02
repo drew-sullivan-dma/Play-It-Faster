@@ -4,10 +4,9 @@ import java.util.Scanner;
 
 public class ClientCLI {
 	
-	private boolean userKnowsWhatTempoToBeginPracticingAt = false;
-	private boolean userThinksGivenPracticeTempoIsPerfect = false; 
+	private Boolean userKnowsTempo = null;
 	private int tempo;
-	private char userOpinionOfPracticeTempo;
+	private char userOpinionOfTempo;
 	
 	public static void main(String[] args) {
 		ClientCLI cli = new ClientCLI();
@@ -16,35 +15,38 @@ public class ClientCLI {
 	}
 	
 	private void runProgram() {
-		setUserKnowledgeOfTempo();
-		while(tempo == 0) {
-			setGoalTempoBasedOnUserInput();
+		while(userKnowsTempo == null) {
+			setUserKnowledgeOfTempo();
 		}
-		while(!userKnowsWhatTempoToBeginPracticingAt) {
-			setPracticeTempoBasedOnGoalTempo();
-			if(userThinksGivenPracticeTempoIsPerfect) {
-				break;
-			}
+		while(!tempoIsSet()) {
+			setTempoBasedOnUserInput();
+		}
+		while(!userKnowsTempo) {
+			setTempoBasedOnGoalTempo();
 			do {
 				printPracticeTempoForUserEvaluation();
 				setUserOpinionOfPracticeTempo();
-				if(userOpinionOfPracticeTempo == 'p') {
-					userKnowsWhatTempoToBeginPracticingAt = true;
-					break;
-				}
-				adjustPracticeTempo(userOpinionOfPracticeTempo);
-			} while(!userThinksGivenPracticeTempoIsPerfect); 
+				adjustPracticeTempo(userOpinionOfTempo);
+			} while(!tempoIsPerfect()); 
 		}
 		printPracticeTempos();
+	}
+
+	private boolean tempoIsSet() {
+		return tempo > 0;
 	}
 	
 	private void setUserKnowledgeOfTempo() {
 		System.out.println("Do you know what tempo to start practicing at today? Yes or No?");
-		try (Scanner scan = new Scanner(System.in)) {
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		try {
 			String userInput = scan.nextLine();
 			char shortenedUserInput = InputTranslator.parseUserOpinionOfPracticeTempo(userInput);
 			if(shortenedUserInput == 'y') {
-				userKnowsWhatTempoToBeginPracticingAt = true;
+				userKnowsTempo = true;
+			} else if(shortenedUserInput == 'n') {
+				userKnowsTempo = false;
 			}
 		} catch (IllegalArgumentException ex) {
 			printOutOfRangeErrorMessage();
@@ -53,9 +55,11 @@ public class ClientCLI {
 		}
 	}
 	
-	private void setGoalTempoBasedOnUserInput() {
+	private void setTempoBasedOnUserInput() {
 		System.out.println("What is your goal tempo?");
-		try (Scanner scan = new Scanner(System.in)) {
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		try {
 			String userInput = scan.nextLine();
 			int userInputInt = Integer.parseInt(userInput);
 			if(InputTranslator.isValidTempo(userInputInt)) {
@@ -72,8 +76,8 @@ public class ClientCLI {
 		try {
 			int untranslatedRhythmsTempo = PracticeTempoCalculator.getRhythmsTempo(tempo);
 			int untranslatedReachTempo = PracticeTempoCalculator.getReachTempo(tempo);
-			int rhythmsTempo = InputTranslator.translateToMetronomeTempo(untranslatedReachTempo);
-			int reachTempo = InputTranslator.translateToMetronomeTempo(untranslatedRhythmsTempo);
+			int rhythmsTempo = InputTranslator.translateToMetronomeTempo(untranslatedRhythmsTempo);
+			int reachTempo = InputTranslator.translateToMetronomeTempo(untranslatedReachTempo);
 			System.out.printf("%-15s%5s", "Practice a few reps at this tempo:", tempo + "\n");
 			System.out.printf("%-15s%4s", "Then practice in rhythms at this tempo:", rhythmsTempo + "\n");
 			System.out.printf("%-15s%5s", "Then bump up the metronome and aim for this tempo:", reachTempo + "\n");
@@ -85,18 +89,25 @@ public class ClientCLI {
 	
 	private void setUserOpinionOfPracticeTempo() {
 		System.out.println("Is this tempo too slow, too fast, or perfect?");
-		try (Scanner scan = new Scanner(System.in)) {
+		@SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+		try {
 			String userInput = scan.nextLine();
 			char shortenedUserInput = InputTranslator.parseUserOpinionOfPracticeTempo(userInput);
-			if(shortenedUserInput == 'p') {
-				userThinksGivenPracticeTempoIsPerfect = true;
-			}
-			userOpinionOfPracticeTempo = shortenedUserInput;
+			userOpinionOfTempo = shortenedUserInput;
 		} catch (IllegalArgumentException ex) {
 			printOutOfRangeErrorMessage();
 		} catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
+	}
+
+	private boolean tempoIsPerfect() {
+		if(userOpinionOfTempo == 'p') {
+			userKnowsTempo = true;
+			return true;
+		}
+		return false;
 	}
 	
 	private void printPracticeTempoForUserEvaluation() {
@@ -104,18 +115,21 @@ public class ClientCLI {
 	}
 	
 	private void adjustPracticeTempo(char userOpinionOfPracticeTempo) {
+		int untranslatedTempo = 0;
 		try {
 			if(userOpinionOfPracticeTempo == 's') {
-				tempo = PracticeTempoCalculator.speedUp(tempo);
+				untranslatedTempo = PracticeTempoCalculator.speedUp(tempo);
 			} else if(userOpinionOfPracticeTempo == 'f') {
-				tempo = PracticeTempoCalculator.slowDown(tempo);
+				untranslatedTempo = PracticeTempoCalculator.slowDown(tempo);
 			}
+			tempo = InputTranslator.translateToMetronomeTempo(untranslatedTempo);
+			
 		} catch(IllegalArgumentException ex) {
 			printOutOfRangeErrorMessage();
 		}
 	}
 	
-	private void setPracticeTempoBasedOnGoalTempo() {
+	private void setTempoBasedOnGoalTempo() {
 		try {
 			int untranslatedDividedTempo = PracticeTempoCalculator.divideByTwo(tempo);
 			tempo = InputTranslator.translateToMetronomeTempo(untranslatedDividedTempo);
@@ -125,9 +139,9 @@ public class ClientCLI {
 	}
 	
 	private void printOutOfRangeErrorMessage() {
-		int TEMPO_LOWER_BOUND = InputTranslator.getTEMPO_LOWER_BOUND();
-		int TEMPO_UPPER_BOUND = InputTranslator.getTEMPO_UPPER_BOUND();
-		System.out.println("Please enter a tempo between " + TEMPO_LOWER_BOUND + " and " +  TEMPO_UPPER_BOUND + ".");
+		int TEMPOS_LOWER_BOUND = InputTranslator.getTemposLowerBound();
+		int TEMPOS_UPPER_BOUND = InputTranslator.getTemposUpperBound();
+		System.out.println("Please enter a tempo between " + TEMPOS_LOWER_BOUND + " and " +  TEMPOS_UPPER_BOUND + ".");
 	}
 	
 
