@@ -121,9 +121,10 @@ public class ClientCLI {
 				untranslatedTempo = PracticeTempoCalculator.speedUp(tempo);
 			} else if(userOpinionOfPracticeTempo == 'f') {
 				untranslatedTempo = PracticeTempoCalculator.slowDown(tempo);
+			} else if(userOpinionOfPracticeTempo == 'p') {
+				untranslatedTempo = tempo;
 			}
 			tempo = InputTranslator.translateToMetronomeTempo(untranslatedTempo);
-			
 		} catch(IllegalArgumentException ex) {
 			printOutOfRangeErrorMessage();
 		}
