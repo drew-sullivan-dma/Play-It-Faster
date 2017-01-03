@@ -5,9 +5,8 @@ public class PracticeTempoCalculator {
 	
 	public static int getRhythmsTempo(int inputTempo) {
 		int rhythmsTempo = inputTempo * 3/4;
-		int TEMPOS_LOWER_BOUND = InputTranslator.getTemposLowerBound();
-		if(rhythmsTempo < TEMPOS_LOWER_BOUND) {
-			return TEMPOS_LOWER_BOUND;	
+		if(rhythmsTempo < InputTranslator.TEMPOS_LOWER_BOUND) {
+			return InputTranslator.TEMPOS_LOWER_BOUND;	
 		} else {
 			return rhythmsTempo;
 		}
@@ -19,8 +18,7 @@ public class PracticeTempoCalculator {
 	}
 	
 	public static int divideByTwo(int inputTempo) {
-		int LOWEST_ADJUSTABLE_TEMPO = InputTranslator.getLowestAdjustableTempo();
-		if(inputTempo >= LOWEST_ADJUSTABLE_TEMPO) {
+		if(inputTempo >= InputTranslator.LOWEST_ADJUSTABLE_TEMPO) {
 			return inputTempo / 2;
 		} else {
 			return inputTempo;
@@ -28,9 +26,8 @@ public class PracticeTempoCalculator {
 	}
 	
 	public static int speedUp(int tempo) {
-		int TEMPOS_UPPER_BOUND = InputTranslator.getTemposUpperBound();
-		if(tempo > TEMPOS_UPPER_BOUND) {
-			tempo = TEMPOS_UPPER_BOUND;
+		if(tempo > InputTranslator.TEMPOS_UPPER_BOUND) {
+			tempo = InputTranslator.TEMPOS_UPPER_BOUND;
 		} else if(tempo >= 160) {
 			tempo += 16;
 		} else if(tempo >= 132) {
@@ -40,7 +37,7 @@ public class PracticeTempoCalculator {
 		} else if(tempo >= 40) {
 			tempo += 6;
 		} else {
-			tempo = InputTranslator.getTemposLowerBound();
+			tempo = InputTranslator.TEMPOS_LOWER_BOUND;
 		}
 		return tempo;
 	}
@@ -57,7 +54,7 @@ public class PracticeTempoCalculator {
 		} else if(tempo >= 44){
 			tempo -= 4;
 		} else {
-			tempo = InputTranslator.getTemposLowerBound();
+			tempo = InputTranslator.TEMPOS_LOWER_BOUND;
 		}
 		return tempo;
 	}	

@@ -2,6 +2,9 @@ package com.drewsullivandma;
 
 public class InputTranslator {
 	
+	public static final int TEMPOS_LOWER_BOUND = 40;
+	public static final int TEMPOS_UPPER_BOUND = 240;
+	public static final int LOWEST_ADJUSTABLE_TEMPO = 80;
 	private static final int[] METRONOME_TEMPOS = new int[]  {40, 42, 44, 46, 48, //0-4
 														      50, 52, 54, 56, 58, //5-9
 														      60, 63, 66, 69, 72, //10-14
@@ -11,21 +14,6 @@ public class InputTranslator {
 														      144, 152, 160, 168, 176, //30-34
 														      184, 192, 200, 208, 216, //35-39
 														      224, 232, 240}; //40-42
-	public static final int TEMPOS_LOWER_BOUND = 40;
-	public static final int TEMPOS_UPPER_BOUND = 240;
-	public static final int LOWEST_ADJUSTABLE_TEMPO = 80;
-
-	public static int getTemposLowerBound() {
-		return TEMPOS_LOWER_BOUND;
-	}
-
-	public static int getTemposUpperBound() {
-		return TEMPOS_UPPER_BOUND;
-	}
-
-	public static int getLowestAdjustableTempo() {
-		return LOWEST_ADJUSTABLE_TEMPO;
-	}
 
 	public static int translateToMetronomeTempo(int tempoToBeTranslated) {
 		if(tempoToBeTranslated == TEMPOS_LOWER_BOUND) {
