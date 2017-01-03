@@ -26,9 +26,7 @@ public class PracticeTempoCalculator {
 	}
 	
 	public static int speedUp(int tempo) {
-		if(tempo > InputTranslator.TEMPOS_UPPER_BOUND) {
-			tempo = InputTranslator.TEMPOS_UPPER_BOUND;
-		} else if(tempo >= 160) {
+		if(tempo >= 160) {
 			tempo += 16;
 		} else if(tempo >= 132) {
 			tempo += 12;
@@ -38,6 +36,10 @@ public class PracticeTempoCalculator {
 			tempo += 6;
 		} else {
 			tempo = InputTranslator.TEMPOS_LOWER_BOUND;
+		}
+		
+		if(tempo > InputTranslator.TEMPOS_UPPER_BOUND) {
+			tempo = InputTranslator.TEMPOS_UPPER_BOUND;
 		}
 		return tempo;
 	}

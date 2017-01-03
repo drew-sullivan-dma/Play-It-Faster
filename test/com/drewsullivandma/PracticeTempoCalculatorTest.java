@@ -23,6 +23,12 @@ public class PracticeTempoCalculatorTest {
 	}
 	
 	@Test
+	public void returns_TEMPOS_UPPER_BOUND_if_calculation_higher_than_TEMPOS_UPPER_BOUND() {
+		assertEquals(240, PracticeTempoCalculator.speedUp(300000));
+		assertEquals(240, PracticeTempoCalculator.speedUp(225));
+	}
+	
+	@Test
 	public void returns_expected_reach_tempo() {
 		assertEquals(70, PracticeTempoCalculator.getReachTempo(60));
 		assertEquals(130, PracticeTempoCalculator.getReachTempo(120));
